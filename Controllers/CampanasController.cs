@@ -46,6 +46,7 @@ namespace PortalCampanas.Controllers
         // Implementa los indicadores calculados (RF4)
         public IActionResult Resumen()
         {
+            //Hola profe estoy haceindo un cambio dentro de esta funcion, yaque ya la habia agregado antes :c
             // Cálculos solicitados en el objetivo del reto
             var totalCampanas = MockData.Campanas.Count;
             var vigentes = MockData.Campanas.Count(c => c.Estado == "Vigente");
