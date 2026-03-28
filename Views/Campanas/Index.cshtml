@@ -1,0 +1,92 @@
+@model IEnumerable<PortalCampanas.Models.Campana>
+
+@{
+    ViewData["Title"] = "Listado de Campañas";
+}
+
+<div class="container pb-5">
+    <div class="d-flex justify-content-between align-items-center my-4">
+        <h1 class="display-6 fw-bold">Campañas Comerciales</h1>
+        <a asp-action="Resumen" class="btn btn-outline-secondary">
+            <i class="bi bi-bar-chart"></i> Ver Resumen
+        </a>
+    </div>
+
+    <div class="card shadow-sm mb-4 border-0 bg-light">
+        <div class="card-body">
+            <form asp-action="Index" method="get" class="row g-3 align-items-end">
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-muted">Categoría</label>
+                    <select name="categoria" class="form-select">
+                        <option value="">Todas las categorías</option>
+                        <option value="Electro">Electro</option>
+                        <option value="Hogares">Hogar</option>
+                        <option value="Moda">Moda</option>
+                        <option value="Tecnología">Tecnología</option>
+                    </select>
+                </div>
+                <div class="col-md-4">
+                    <label class="form-label small fw-bold text-muted">Estado</label>
+                    <select name="estado" class="form-select">
+                        <option value="">Todos los estados</option>
+                        <option value="Vigente">Vigente</option>
+                        <option value="Próxima">Próxima</option>
+                        <option value="Finalizada">Finalizada</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex gap-2">
+                    <button type="submit" class="btn btn-primary px-4">Filtrar</button>
+                    <a asp-action="Index" class="btn btn-light border">Limpiar</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <div class="row row-cols-1 row-cols-md-2 row-cols-lg-3 g-4">
+        @if (!Model.Any())
+        {
+            <div class="col-12 text-center py-5">
+                <p class="text-muted">No se encontraron campañas con los filtros seleccionados.</p>
+            </div>
+        }
+        else
+        {
+            @foreach (var item in Model)
+            {
+                <div class="col">
+                    <div class="card h-100 shadow-sm border-0 border-top border-4 @(item.Estado == "Vigente" ? "border-success" : (item.Estado == "Próxima" ? "border-primary" : "border-secondary"))">
+                        <div class="card-body">
+                            <div class="d-flex justify-content-between align-items-start mb-2">
+                                <h5 class="card-title fw-bold mb-0">@item.Nombre</h5>
+                                <span class="badge @(item.Estado == "Vigente" ? "bg-success" : (item.Estado == "Próxima" ? "bg-primary" : "bg-secondary"))">
+                                    @item.Estado
+                                </span>
+                            </div>
+                            
+                            <p class="text-muted small mb-3">
+                                <i class="bi bi-tag"></i> @item.Categoria | <i class="bi bi-shop"></i> @item.Canal
+                            </p>
+
+                            <div class="d-flex align-items-center mb-3">
+                                <div class="h4 mb-0 fw-bold text-danger">@item.DescuentoPct%</div>
+                                <div class="ms-2 text-muted small">DCTO.</div>
+                            </div>
+
+                            <div class="text-secondary small mb-4">
+                                <div><i class="bi bi-calendar-event"></i> Inicio: @item.FechaInicio.ToString("dd MMM yyyy")</div>
+                            </div>
+
+                            <a asp-action="Detalle" asp-route-id="@item.Id" class="btn btn-outline-dark w-100 rounded-pill">
+                                Ver detalle [cite: 33]
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            }
+        }
+    </div>
+
+    <div class="mt-4 text-muted small">
+        @Model.Count() campaña(s) encontrada(s) [cite: 134]
+    </div>
+</div>
