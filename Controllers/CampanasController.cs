@@ -27,7 +27,7 @@ namespace PortalCampanas.Controllers
 
             return View(query.ToList());
         }
-
+        //comentario pedido por el profesor linea 30
         // GET: /Campanas/Detalle/{id}
         // Implementa la visualización de detalle (RF2)
         public IActionResult Detalle(int id)
